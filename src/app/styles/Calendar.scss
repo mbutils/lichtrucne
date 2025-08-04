@@ -1,0 +1,150 @@
+.calendar {
+    color: #683635;
+    font-weight: bold;
+    padding: 0 12px;
+
+    .calendar-header {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+
+        .button-right {
+            position: absolute;
+            right: 22px;
+        }
+
+        &.scr-sm {
+            justify-content: space-between;
+        }
+    }
+
+    .calendar-year {
+        font-weight: bold;
+        font-size: 78px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &.scr-sm {
+            font-size: 42px;
+        }
+    }
+
+    .calendar-mode__year {
+        .month-view-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+    }
+
+    &.scr-sm {
+        .calendar-mode__year {
+            .month-view-line {
+                margin-bottom: 12px;
+            }
+        }
+    }
+}
+
+
+
+.calendar-month {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .month__title {
+        font-weight: bold;
+        font-size: 16px;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 8px;
+    }
+
+    .month__week {
+        display: flex;
+        background-color: #fddeda;
+        border-radius: 8px;
+        font-weight: bold;
+        padding: 0 6px;
+
+        &-name {
+            font-size: 12px;
+            width: 32px;
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    .month__days {
+        padding: 0 6px;
+        .week-line {
+            display: flex;
+            margin: 2px 0;
+        }
+    }
+
+    &.scr-sm {
+        .month__title {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .month__week {
+            padding: 0 2px 0 5px;
+            &-name {
+                font-size: 10px;
+                width: 26px;
+            }
+        }
+
+        .month__days {
+            padding: 0 4px;
+        }
+    }
+}
+
+.calendar-day {
+    .day-view {
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 14px;
+
+        &__year {
+            width: 28px;
+            margin-left: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &.today {
+                background-color: #85b8f3;
+                // border: 1px solid #4f9ffa;
+                color: #fff;
+            }
+
+            &.day-pass {
+                opacity: 60%;
+                font-weight: lighter;
+            }
+
+            &.main-event {
+                background-color: #ffb3b3;
+            }
+        }
+
+        &__month {
+
+        }
+    }
+
+    &.scr-sm {
+        .day-view__year {
+            width: 22px;
+            height: 20px;
+            font-size: 12px;
+        }
+    }
+}

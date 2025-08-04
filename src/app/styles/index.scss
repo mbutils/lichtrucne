@@ -1,0 +1,11 @@
+html, body, #root {
+    min-height: 100%;
+    margin: 0;
+    font-family: 'Patrick Hand', cursive !important;
+}
+
+@import "./button.scss";
+@import "./font.scss";
+@import "./common.scss";
+@import "./Layout.scss";
+
