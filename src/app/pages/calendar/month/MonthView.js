@@ -102,7 +102,7 @@ const MonthView = (props) => {
 
             <div className="month__week">
                 {WEEK_DAYS.map(dayOfWeek => (
-                    <div className="month__week-name">{dayOfWeek.en}</div>
+                    <div className="month__week-name">{dayOfWeek.vi}</div>
                 ))}
             </div>
 
