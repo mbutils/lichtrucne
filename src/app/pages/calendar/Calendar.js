@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 
 import MonthView from "./month/MonthView";
 import SettingModel from "./setting/SettingModel";
+import GiftModal from "./gift/GiftModal";
 import { CAL_VIEW_MODE } from "../../models/Constants";
 import "../../styles/Calendar.scss";
 import {ReactComponent as SettingIcon} from '../../../assets/imgs/settings-cute-svgrepo-com.svg';
@@ -12,6 +13,8 @@ import {ReactComponent as ArrowNextIcon} from '../../../assets/imgs/arrow-next-s
 import {ReactComponent as ArrowNextIconSm} from '../../../assets/imgs/arrow-next-svgrepo-com-small.svg';
 import {ReactComponent as ReloadIcon} from '../../../assets/imgs/refresh-alt-svgrepo-com.svg';
 import {ReactComponent as ReloadIconSm} from '../../../assets/imgs/refresh-alt-svgrepo-com-small.svg';
+import {ReactComponent as GiftIcon} from '../../../assets/imgs/gift-icon-stroke-pink-by-Vexels.svg';
+import {ReactComponent as GiftIconSm} from '../../../assets/imgs/gift-icon-stroke-pink-by-Vexels-small.svg';
 
 const Calendar = () => {
     const [selectYear, setSelectYear] = useState(new Date().getFullYear());
@@ -19,7 +22,8 @@ const Calendar = () => {
     const [monthOfLine, setMonthOfLine] = useState(2);
     const [scrSize, setScrSize] = useState('sm'); // sm, md, lg
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [refreshData, setRefreshData] = useState(false);
+    const [giftOpen, setGiftOpen] = useState(false);
+    const [settingData, setSettingData] = useState({});
 
     function handleWindowSizeChange() {
         let screenWidth = window.innerWidth;
@@ -36,6 +40,7 @@ const Calendar = () => {
     }
 
     useEffect(() => {
+        reload(false);
         handleWindowSizeChange();
         window.addEventListener('resize', handleWindowSizeChange);
         return () => {
@@ -55,7 +60,7 @@ const Calendar = () => {
                             year={selectYear}
                             viewMode={viewMode}
                             scrSize={scrSize}
-                            refreshData={refreshData}
+                            settingData={settingData}
                         />
                     </div>
                 )
@@ -69,9 +74,19 @@ const Calendar = () => {
         return renderedAll;
     }
 
+    function reload() {
+        setSelectYear(new Date().getFullYear());
+    }
+
     return (
         <div className={`calendar scr-${scrSize}`}>
             <div className={`calendar-header scr-${scrSize}`}>
+                <div className='button-left'>
+                    <button className="my-btn anime-btn-2 btn-md"
+                        onClick={() => setGiftOpen(true)}>
+                        {scrSize != 'lg' ? <GiftIconSm/> : <GiftIcon/>}
+                    </button>
+                </div>
                 <div className={`calendar-year scr-${scrSize}`}>
                     <button className="my-btn anime-btn-2 btn-md mr-4"
                         onClick={() => setSelectYear(selectYear - 1)}>
@@ -88,8 +103,8 @@ const Calendar = () => {
                         onClick={() => setIsModalOpen(true)}>
                         {scrSize != 'lg' ? <SettingIconSm/> : <SettingIcon/>}
                     </button>
-                    <button className="my-btn anime-btn-2 btn-md ml-4"
-                        onClick={() => setSelectYear(new Date().getFullYear())}>
+                    <button className={`my-btn anime-btn-2 btn-md ${scrSize != 'lg' ? 'ml-2' : 'ml-4'}`}
+                        onClick={() => reload()}>
                         {scrSize != 'lg' ? <ReloadIconSm/> : <ReloadIcon/>}
                     </button>
                 </div>
@@ -109,7 +124,14 @@ const Calendar = () => {
             <SettingModel
                 isModalOpen={isModalOpen}
                 handleCancel={() => setIsModalOpen(false)}
-                handleConfirm={() => setIsModalOpen(false)}
+                handleConfirm={(settingData) => {
+                    setSettingData(settingData);
+                    setIsModalOpen(false);
+                }}
+            />
+            <GiftModal
+                isModalOpen={giftOpen}
+                handleCancel={() => setGiftOpen(false)}
             />
         </div>
     )

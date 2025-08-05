@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { DatePicker, ColorPicker, Modal, Row, Col } from 'antd';
+import { useState, useEffect } from 'react';
+import { DatePicker, ColorPicker, Modal, Row, Col, Button } from 'antd';
 import dayjs from 'dayjs';
+import { DeleteOutlined } from '@ant-design/icons';
 
 const SettingModel = (props) => {
     const { isModalOpen, handleCancel, handleConfirm } = props;
@@ -34,32 +35,38 @@ const SettingModel = (props) => {
             [prop]: {
                 ...formData[prop],
                 date: date ? date.format('YYYY-MM-DD') : '',
-                // date: date,
                 dayOfMonth: date ? date.date() : '',
-                month: date ? date.month() + 1 : '',
+                month: date ? date.month() : '',
             }
         });
     };
+
     function getDateString(date) {
-        return date ? dayjs(date).format('YYYY-MM-DD') : '';
+        return date ? dayjs(date) : undefined;
     }
     
     return (
         <Modal
             title="Chọn ngày trực gần nhất"
-            closable={{ 'aria-label': 'Custom Close Button' }}
             open={isModalOpen}
             onOk={handleOk}
             onCancel={handleCancel}
+            centered
         >
                 <Row className='mb-3'>
                     <Col span={8}><label className='mr-4'>Của em:</label></Col>
                     <Col span={16}>
                         <Row>
                             <DatePicker
-                                // defaultValue={getDateString(formData?.em?.date)} 
+                                value={getDateString(formData?.em?.date)} 
                                 onChange={date => onChangeDate('em', date)} />
-                            <ColorPicker defaultValue={defaultColor.em} disabled/>
+                            <ColorPicker defaultValue={defaultColor.em} disabled
+                                className='ml-2'
+                            />
+                            <Button danger icon={<DeleteOutlined />}
+                                className='ml-2'
+                                onClick={() => onChangeDate('em', null)}
+                            ></Button>
                         </Row>
                     </Col>
                 </Row>
@@ -70,11 +77,16 @@ const SettingModel = (props) => {
                         <Col span={16}>
                             <Row>
                                 <DatePicker 
-                                    // defaultValue={getDateString(formData[`other${num}`]?.date)} 
+                                    value={getDateString(formData[`other${num}`]?.date)} 
                                     onChange={date => onChangeDate(`other${num}`, date)} />
                                 <ColorPicker defaultValue={defaultColor[`other${num}`]}
+                                    className='ml-2'
                                     disabled
                                 />
+                                <Button danger icon={<DeleteOutlined />}
+                                    className='ml-2'
+                                    onClick={() => onChangeDate(`other${num}`, null)}
+                                ></Button>
                             </Row>
                         </Col>
                     </Row>

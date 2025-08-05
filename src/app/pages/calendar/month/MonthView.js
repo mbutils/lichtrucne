@@ -4,18 +4,39 @@ import {MONTH_NAME, WEEK_DAYS} from "../../../models/Constants";
 import DayView from "../day/DayView";
 
 const MonthView = (props) => {
-    const {month, year, viewMode, scrSize} = props;
+    const {month, year, viewMode, scrSize, settingData} = props;
     const [dayMap, setDayMap] = useState([]);
 
     useEffect(() => {
         getDaysOfMonth();
-    }, [month, year]);
+    }, [month, year, settingData]);
 
     function getDaysOfMonth() {
         const days = [];
-        const date = new Date(year, month - 1, 1); // month is 0-based (0 = Jan)
+        const date = new Date(year, month - 1, 1, 0, 0, 0, 0); // month is 0-based (0 = Jan)
+        date.setHours(0, 0, 0, 0);
+
         const savedData = JSON.parse(localStorage.getItem('ngayTrucSetting'));
-        console.log('savedData', savedData);
+        var emDate = savedData?.em?.date;
+        var other1Date = savedData?.other1?.date;
+        var other2Date = savedData?.other2?.date;
+        var other3Date = savedData?.other3?.date;
+        if (emDate) {
+            emDate = new Date(emDate);
+            emDate.setHours(0, 0, 0, 0);
+        }
+        if (other1Date) {
+            other1Date = new Date(other1Date);
+            other1Date.setHours(0, 0, 0, 0);
+        }
+        if (other2Date) {
+            other2Date = new Date(other2Date);
+            other2Date.setHours(0, 0, 0, 0);
+        }
+        if (other3Date) {
+            other3Date = new Date(other3Date);
+            other3Date.setHours(0, 0, 0, 0);
+        }
 
         while (date.getMonth() === month - 1) {
             days.push({
@@ -23,21 +44,24 @@ const MonthView = (props) => {
                 month: month,
                 dayOfMonth: date.getDate(),
                 dayOfWeek: WEEK_DAYS.find(i => i.day == date.getDay()), // 0-Sunday, 6-Monday
-                event: () => {
-                    if (savedData) {
-                        return {
-                            em: savedData.em && savedData.em.dayOfMonth === date.getDate() && savedData.em.month === month,
-                            other1: savedData.other1 && savedData.other1.dayOfMonth === date.getDate() && savedData.other1.month === month,
-                            other2: savedData.other2 && savedData.other2.dayOfMonth === date.getDate() && savedData.other2.month === month,
-                            other3: savedData.other3 && savedData.other3.dayOfMonth === date.getDate() && savedData.other3.month === month,
-                        };
-                    }
+                event: {
+                    em: subtractDay(date, emDate),
+                    other1: subtractDay(date, other1Date),
+                    other2: subtractDay(date, other2Date),
+                    other3: subtractDay(date, other3Date),
                 }
             });
             date.setDate(date.getDate() + 1);
         }
 
         setDayMap(days);
+    }
+
+    function subtractDay(date1, date2) {
+        if (!date1 || !date2) {
+            return false;
+        }
+        return (date1 - date2) / (1000 * 60 * 60 * 24) % 5 === 0;
     }
 
     function renderDayOfMonth() {

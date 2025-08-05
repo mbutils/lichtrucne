@@ -9,13 +9,27 @@
         justify-content: center;
         margin-bottom: 20px;
 
+        .button-left {
+            position: absolute;
+            left: 22px;
+        }
         .button-right {
             position: absolute;
             right: 22px;
         }
 
         &.scr-sm {
-            justify-content: space-between;
+            // justify-content: space-between;
+            .calendar-year {
+                // position: absolute;
+                // left: 100px;
+            }
+            .button-left {
+                left: 12px;
+            }
+            .button-right {
+                right: 12px;
+            }
         }
     }
 
@@ -57,7 +71,7 @@
 
     .month__title {
         font-weight: bold;
-        font-size: 16px;
+        font-size: 20px;
         display: flex;
         justify-content: center;
         margin-bottom: 8px;
@@ -71,7 +85,7 @@
         padding: 0 6px;
 
         &-name {
-            font-size: 12px;
+            font-size: 16px;
             width: 32px;
             display: flex;
             justify-content: center;
@@ -88,14 +102,14 @@
 
     &.scr-sm {
         .month__title {
-            font-size: 14px;
+            font-size: 16px;
             margin-bottom: 4px;
         }
 
         .month__week {
             padding: 0 2px 0 5px;
             &-name {
-                font-size: 10px;
+                font-size: 14px;
                 width: 26px;
             }
         }
@@ -106,45 +120,69 @@
     }
 }
 
+
 .calendar-day {
     .day-view {
-        border-radius: 50%;
         cursor: pointer;
-        font-size: 14px;
 
         &__year {
             width: 28px;
+            font-size: 18px;
             margin-left: 4px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
 
-            &.today {
-                background-color: #85b8f3;
-                // border: 1px solid #4f9ffa;
-                color: #fff;
-            }
+            .event-block {
+                display: flex;
+                justify-content: center;
+                .other-event {
+                    width: 8px;
+                    height: 8px;
+                    border-radius: 50%;
 
-            &.day-pass {
-                opacity: 60%;
-                font-weight: lighter;
-            }
-
-            &.main-event {
-                background-color: #ffb3b3;
+                    &__1 {
+                        background-color: #1677ff;
+                    }
+                    &__2 {
+                        background-color: #fff64c;
+                    }
+                    &__3 {
+                        background-color: #53ef62;
+                    }
+                }
             }
         }
 
         &__month {
-
+            
         }
     }
 
-    &.scr-sm {
-        .day-view__year {
+    .day-view__content {
+        height: 100%;
+        width: 100%;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &.today {
+            background-color: #85b8f3;
+            border: 1px solid #3c92f5;
+            color: #fff;
+        }
+        &.day-pass {
+            opacity: 60%;
+            font-weight: lighter;
+        }
+        &.main-event {
+            background-color: #ffb3b3;
+        }
+    }
+
+    .scr-sm {
+        &.day-view__year {
             width: 22px;
             height: 20px;
-            font-size: 12px;
+            font-size: 16px;
         }
     }
 }
