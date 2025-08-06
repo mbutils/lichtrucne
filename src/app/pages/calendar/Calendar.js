@@ -15,9 +15,12 @@ import {ReactComponent as ReloadIcon} from '../../../assets/imgs/refresh-alt-svg
 import {ReactComponent as ReloadIconSm} from '../../../assets/imgs/refresh-alt-svgrepo-com-small.svg';
 import {ReactComponent as GiftIcon} from '../../../assets/imgs/gift-icon-stroke-pink-by-Vexels.svg';
 import {ReactComponent as GiftIconSm} from '../../../assets/imgs/gift-icon-stroke-pink-by-Vexels-small.svg';
+import {ReactComponent as BackIcon} from '../../../assets/imgs/left-arrow-back-svgrepo-com.svg';
+import {ReactComponent as BackIconSm} from '../../../assets/imgs/left-arrow-back-svgrepo-com-small.svg';
 
 const Calendar = () => {
     const [selectYear, setSelectYear] = useState(new Date().getFullYear());
+    const [selectMonth, setSelectMonth] = useState(1);
     const [viewMode, setVewMode] = useState(CAL_VIEW_MODE.year);
     const [monthOfLine, setMonthOfLine] = useState(2);
     const [scrSize, setScrSize] = useState('sm'); //  xs, sm, md, lg
@@ -27,7 +30,7 @@ const Calendar = () => {
 
     function handleWindowSizeChange() {
         let screenWidth = window.innerWidth;
-        if (screenWidth < 420) {
+        if (screenWidth < 410) {
             setScrSize('xs');
             setMonthOfLine(2);
         } else if (screenWidth <= 768) {
@@ -57,7 +60,9 @@ const Calendar = () => {
             let renderedItems = [];
             for (let month = (line * monthOfLine) + 1; month <= monthOfLine * (line + 1); month++) {
                 renderedItems.push(
-                    <div className='month-view-block'>
+                    <div className='month-view-block'
+                        onClick={() => selectMonthDetail(month)}
+                    >
                         <MonthView
                             month={month}
                             year={selectYear}
@@ -79,16 +84,29 @@ const Calendar = () => {
 
     function reload() {
         setSelectYear(new Date().getFullYear());
+        setVewMode(CAL_VIEW_MODE.year);
+    }
+
+    function selectMonthDetail(month) {
+        setVewMode(CAL_VIEW_MODE.month);
+        setSelectMonth(month);
     }
 
     return (
         <div className={`calendar scr-${scrSize}`}>
             <div className={`calendar-header scr-${scrSize}`}>
                 <div className='button-left'>
-                    <button className="my-btn anime-btn-2 btn-md"
-                        onClick={() => setGiftOpen(true)}>
-                        {scrSize != 'lg' ? <GiftIconSm/> : <GiftIcon/>}
-                    </button>
+                    {viewMode === CAL_VIEW_MODE.year ? (
+                        <button className="my-btn anime-btn-2 btn-md"
+                            onClick={() => setGiftOpen(true)}>
+                            {scrSize != 'lg' ? <GiftIconSm/> : <GiftIcon/>}
+                        </button>
+                    ) : (
+                        <button className="my-btn anime-btn-2 btn-md"
+                            onClick={() => setVewMode(CAL_VIEW_MODE.year)}>
+                            {scrSize != 'lg' ? <BackIconSm/> : <BackIcon/>}
+                        </button>
+                    )}
                 </div>
                 <div className={`calendar-year scr-${scrSize}`}>
                     <button className="my-btn anime-btn-2 btn-md mr-4"
@@ -121,6 +139,13 @@ const Calendar = () => {
 
             {viewMode === CAL_VIEW_MODE.month ? (
                 <div className='calendar-mode__month'>
+                    <MonthView
+                        month={selectMonth}
+                        year={selectYear}
+                        viewMode={viewMode}
+                        scrSize={scrSize}
+                        settingData={settingData}
+                    />
                 </div>
             ) : null}
 

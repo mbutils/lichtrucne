@@ -59,4 +59,4 @@ export const WEEK_DAYS = [
     {day: 6, en: "S", vi: "T7"},
 ]
 
-export const CAL_VIEW_MODE = {year: 1, month: 2};
+export const CAL_VIEW_MODE = {year: "year", month: "month"};
