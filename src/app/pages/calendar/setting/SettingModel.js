@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import { DeleteOutlined } from '@ant-design/icons';
 
 const SettingModel = (props) => {
-    const { isModalOpen, handleCancel, handleConfirm } = props;
+    const { isModalOpen, handleCancel, handleConfirm, scrSize } = props;
     const [formData, setFormData] = useState({
         em: '',
         other1: '',
@@ -54,8 +54,8 @@ const SettingModel = (props) => {
             centered
         >
                 <Row className='mb-3'>
-                    <Col span={8}><label className='mr-4'>Của em:</label></Col>
-                    <Col span={16}>
+                    <Col span={scrSize === 'xs' ? 6 : 8}><label className='mr-4'>Của em:</label></Col>
+                    <Col span={scrSize === 'xs' ? 18 : 16}>
                         <Row>
                             <DatePicker
                                 value={getDateString(formData?.em?.date)} 
@@ -73,8 +73,8 @@ const SettingModel = (props) => {
 
                 {[1, 2, 3].map((num) => (
                     <Row className='mb-3'>
-                        <Col span={8}><label className='mr-4'>Người khác {num}:</label></Col>
-                        <Col span={16}>
+                        <Col span={scrSize === 'xs' ? 6 : 8}><label className='mr-4'>{scrSize === 'xs' ? 'Khác' : 'Người khác'} {num}:</label></Col>
+                        <Col span={scrSize === 'xs' ? 18 : 16}>
                             <Row>
                                 <DatePicker 
                                     value={getDateString(formData[`other${num}`]?.date)} 
