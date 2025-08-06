@@ -20,14 +20,17 @@ const Calendar = () => {
     const [selectYear, setSelectYear] = useState(new Date().getFullYear());
     const [viewMode, setVewMode] = useState(CAL_VIEW_MODE.year);
     const [monthOfLine, setMonthOfLine] = useState(2);
-    const [scrSize, setScrSize] = useState('sm'); // sm, md, lg
+    const [scrSize, setScrSize] = useState('sm'); //  xs, sm, md, lg
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [giftOpen, setGiftOpen] = useState(false);
     const [settingData, setSettingData] = useState({});
 
     function handleWindowSizeChange() {
         let screenWidth = window.innerWidth;
-        if (screenWidth <= 768) {
+        if (screenWidth < 430) {
+            setScrSize('xs');
+            setMonthOfLine(2);
+        } else if (screenWidth <= 768) {
             setScrSize('sm');
             setMonthOfLine(2);
         } else if (screenWidth <= 970) {
@@ -103,7 +106,7 @@ const Calendar = () => {
                         onClick={() => setIsModalOpen(true)}>
                         {scrSize != 'lg' ? <SettingIconSm/> : <SettingIcon/>}
                     </button>
-                    <button className={`my-btn anime-btn-2 btn-md ${scrSize != 'lg' ? 'ml-2' : 'ml-4'}`}
+                    <button className={`my-btn anime-btn-2 btn-md cal-btn-ml`}
                         onClick={() => reload()}>
                         {scrSize != 'lg' ? <ReloadIconSm/> : <ReloadIcon/>}
                     </button>
@@ -128,6 +131,7 @@ const Calendar = () => {
                     setSettingData(settingData);
                     setIsModalOpen(false);
                 }}
+                scrSize={scrSize}
             />
             <GiftModal
                 isModalOpen={giftOpen}
