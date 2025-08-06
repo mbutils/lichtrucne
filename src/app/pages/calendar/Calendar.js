@@ -27,7 +27,7 @@ const Calendar = () => {
 
     function handleWindowSizeChange() {
         let screenWidth = window.innerWidth;
-        if (screenWidth < 430) {
+        if (screenWidth < 420) {
             setScrSize('xs');
             setMonthOfLine(2);
         } else if (screenWidth <= 768) {
