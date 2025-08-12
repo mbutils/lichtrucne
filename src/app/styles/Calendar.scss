@@ -98,6 +98,12 @@
         display: flex;
         justify-content: center;
         margin-bottom: 8px;
+
+        .title {
+            min-width: 190px;
+            display: flex;
+            justify-content: center;
+        }
     }
 
     .month__week {
@@ -127,6 +133,9 @@
         .month__title {
             font-size: 16px;
             margin-bottom: 4px;
+            .title {
+                min-width: 140px;
+            }
         }
 
         .month__week {

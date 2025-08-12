@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 
-import {MONTH_NAME, WEEK_DAYS} from "../../../models/Constants";
+import {MONTH_NAME, WEEK_DAYS, CAL_VIEW_MODE} from "../../../models/Constants";
 import DayView from "../day/DayView";
 
 const MonthView = (props) => {
-    const {month, year, viewMode, scrSize, settingData} = props;
+    const {month, year, viewMode, scrSize, settingData, setMonth, setYear} = props;
     const [dayMap, setDayMap] = useState([]);
 
     useEffect(() => {
@@ -94,10 +95,38 @@ const MonthView = (props) => {
         return renderedAll;
     }
 
+    function changeMonth(isNext) {
+        if (isNext) {
+            if (month >= 12) {
+                setMonth(1);
+                setYear(year + 1);
+            } else {
+                setMonth(month + 1);
+            } 
+        } else {
+            if (month <= 1) {
+                setMonth(12);
+                setYear(year - 1);
+            } else {
+                setMonth(month - 1);
+            } 
+        }
+    }
+
     return (
         <div className={`calendar-month scr-${scrSize}`}>
             <div className="month__title">
-                {month}-{MONTH_NAME[month].en}
+                {viewMode === CAL_VIEW_MODE.month ? (<>
+                    <LeftOutlined className='mr-3 my-btn' style={{ fontSize: '0.8em' }}
+                        onClick={() => changeMonth(false)}
+                    />
+                    <div className='title'>{month}-{MONTH_NAME[month].en}</div>
+                    <RightOutlined  className='ml-3 my-btn' style={{ fontSize: '0.8em' }}
+                        onClick={() => changeMonth(true)}
+                    />
+                </>) : (
+                    <>{month}-{MONTH_NAME[month].en}</>
+                )}
             </div>
 
             <div className="month__week">

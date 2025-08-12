@@ -145,6 +145,8 @@ const Calendar = () => {
                         viewMode={viewMode}
                         scrSize={scrSize}
                         settingData={settingData}
+                        setMonth={(m) => setSelectMonth(m)}
+                        setYear={(y) => setSelectYear(y)}
                     />
                 </div>
             ) : null}
