@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { DatePicker, ColorPicker, Modal, Row, Col, Button } from 'antd';
+import { DatePicker, ColorPicker, Modal, Row, Col, Button, InputNumber } from 'antd';
 import dayjs from 'dayjs';
 import { DeleteOutlined } from '@ant-design/icons';
 
 const SettingModel = (props) => {
     const { isModalOpen, handleCancel, handleConfirm, scrSize } = props;
     const [formData, setFormData] = useState({
+        tuaNum: 5,
         em: '',
         other1: '',
         other2: '',
@@ -41,6 +42,13 @@ const SettingModel = (props) => {
         });
     };
 
+    const onChangeTua = (num) => {
+        setFormData({
+            ...formData,
+            tuaNum: num ? num : 5
+        });
+    };
+
     function getDateString(date) {
         return date ? dayjs(date) : undefined;
     }
@@ -53,6 +61,15 @@ const SettingModel = (props) => {
             onCancel={handleCancel}
             centered
         >
+                <Row className='mb-3'>
+                    <Col span={scrSize === 'xs' ? 6 : 8}><label className='mr-4'>Ngày tua:</label></Col>
+                    <Col span={scrSize === 'xs' ? 18 : 16}>
+                        <InputNumber min={1} max={30} defaultValue={5}
+                            value={formData?.tuaNum}
+                            onChange={num => onChangeTua(num)} />
+                    </Col>
+                </Row>
+
                 <Row className='mb-3'>
                     <Col span={scrSize === 'xs' ? 6 : 8}><label className='mr-4'>Của em:</label></Col>
                     <Col span={scrSize === 'xs' ? 18 : 16}>

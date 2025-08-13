@@ -18,6 +18,7 @@ const MonthView = (props) => {
         date.setHours(0, 0, 0, 0);
 
         const savedData = JSON.parse(localStorage.getItem('ngayTrucSetting'));
+        var tuaNum = savedData?.tuaNum || 5;
         var emDate = savedData?.em?.date;
         var other1Date = savedData?.other1?.date;
         var other2Date = savedData?.other2?.date;
@@ -46,10 +47,10 @@ const MonthView = (props) => {
                 dayOfMonth: date.getDate(),
                 dayOfWeek: WEEK_DAYS.find(i => i.day == date.getDay()), // 0-Sunday, 6-Monday
                 event: {
-                    em: subtractDay(date, emDate),
-                    other1: subtractDay(date, other1Date),
-                    other2: subtractDay(date, other2Date),
-                    other3: subtractDay(date, other3Date),
+                    em: subtractDay(date, emDate, tuaNum),
+                    other1: subtractDay(date, other1Date, tuaNum),
+                    other2: subtractDay(date, other2Date, tuaNum),
+                    other3: subtractDay(date, other3Date, tuaNum),
                 }
             });
             date.setDate(date.getDate() + 1);
@@ -58,11 +59,11 @@ const MonthView = (props) => {
         setDayMap(days);
     }
 
-    function subtractDay(date1, date2) {
+    function subtractDay(date1, date2, tuaNum) {
         if (!date1 || !date2) {
             return false;
         }
-        return (date1 - date2) / (1000 * 60 * 60 * 24) % 5 === 0;
+        return (date1 - date2) / (1000 * 60 * 60 * 24) % tuaNum === 0;
     }
 
     function renderDayOfMonth() {
