@@ -12,6 +12,7 @@
     "canvas-confetti": "^1.9.3",
     "dayjs": "^1.11.13",
     "lunar-calendar": "^0.1.4",
+    "lunar-typescript": "^1.8.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.7.1",

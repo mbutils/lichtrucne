@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import LunarCalendar from 'lunar-calendar';
+import { Lunar } from 'lunar-typescript';
 
 import { CAL_VIEW_MODE } from "../../../models/Constants";
 
@@ -10,11 +10,8 @@ const DayView = (props) => {
     useEffect(() => {
         var lunar;
         if (viewMode === CAL_VIEW_MODE.month && dateData) {
-            lunar = LunarCalendar.solarToLunar(
-                dateData.year,
-                dateData.month,
-                dateData.dayOfMonth
-            );
+            var date = new Date(dateData.year, dateData.month - 1, dateData.dayOfMonth);
+            var lunar = Lunar.fromDate(date);
         }
         setLunarDate(lunar);
     }, [viewMode, dateData]);
@@ -61,8 +58,8 @@ const DayView = (props) => {
                         {!dateData ? null : dateData.dayOfMonth}
                     </div>
                     {lunarDate ? (
-                        <div className={`day-lunar ${lunarDate.lunarDay === 1 ? 'start-lunar-month' : ''}`}>
-                            {lunarDate?.lunarDay}/{lunarDate?.lunarMonth}
+                        <div className={`day-lunar ${lunarDate.getDay() === 1 ? 'start-lunar-month' : ''}`}>
+                            {lunarDate?.getDay()}/{lunarDate?.getMonth()}
                         </div>
                     ) : null}
                     <div className={`event-block ${dateData?.event?.other1 || dateData?.event?.other2 || dateData?.event?.other3 ? '' : 'd-none'}`}>
