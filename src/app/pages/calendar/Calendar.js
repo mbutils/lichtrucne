@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
+import { ScheduleOutlined } from "@ant-design/icons";
 
-import MonthView from "./month/MonthView";
-import SettingModel from "./setting/SettingModel";
-import GiftModal from "./gift/GiftModal";
+import MonthView from "./MonthView";
+import SettingModel from "./SettingModel";
+import GiftModal from "./GiftModal";
 import { CAL_VIEW_MODE } from "../../models/Constants";
 import "../../styles/Calendar.scss";
 import {ReactComponent as SettingIcon} from '../../../assets/imgs/settings-cute-svgrepo-com.svg';
@@ -46,7 +47,7 @@ const Calendar = () => {
     }
 
     useEffect(() => {
-        reload(false);
+        reload();
         handleWindowSizeChange();
         window.addEventListener('resize', handleWindowSizeChange);
         return () => {
@@ -98,9 +99,13 @@ const Calendar = () => {
                 <div className='button-left'>
                     {viewMode === CAL_VIEW_MODE.year ? (
                         <button className="my-btn anime-btn-2 btn-md"
-                            onClick={() => setGiftOpen(true)}>
-                            {scrSize != 'lg' ? <GiftIconSm/> : <GiftIcon/>}
+                            onClick={() => selectMonthDetail((new Date()).getMonth() + 1)}>
+                            <ScheduleOutlined style={{fontSize: scrSize != 'lg' ? '25px' : '50px', color: '#c35858'}}/>
                         </button>
+                        // <button className="my-btn anime-btn-2 btn-md"
+                        //     onClick={() => setGiftOpen(true)}>
+                        //     {scrSize != 'lg' ? <GiftIconSm/> : <GiftIcon/>}
+                        // </button>
                     ) : (
                         <button className="my-btn anime-btn-2 btn-md"
                             onClick={() => setVewMode(CAL_VIEW_MODE.year)}>

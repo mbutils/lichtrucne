@@ -1,15 +1,28 @@
 import { useState, useEffect } from 'react';
+import { Lunar } from 'lunar-typescript';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 
-import {MONTH_NAME, WEEK_DAYS, CAL_VIEW_MODE} from "../../../models/Constants";
-import DayView from "../day/DayView";
+import {MONTH_NAME, WEEK_DAYS, CAL_VIEW_MODE} from "../../models/Constants";
+import DayView from "./DayView";
 
 const MonthView = (props) => {
     const {month, year, viewMode, scrSize, settingData, setMonth, setYear} = props;
     const [dayMap, setDayMap] = useState([]);
+    const [daySelect, setDaySelect] = useState(null);
+    const [events, setEvents] = useState(null);
 
     useEffect(() => {
         getDaysOfMonth();
+        if (viewMode === CAL_VIEW_MODE.month) {
+            var today = new Date(year, month - 1, daySelect?.solar ? daySelect.solar.dayOfMonth : (new Date()).getDate());
+            if (today.getMonth() + 1 !== month) {
+                today = new Date(year, month, 0); // mac dinh ngay cuoi cung cua thang dang xem
+            }
+            setDaySelect({
+                solar: { dayOfMonth: today.getDate(), month: month, year: year },
+                lunar: Lunar.fromDate(today)
+            });
+        }
     }, [month, year, settingData]);
 
     function getDaysOfMonth() {
@@ -45,7 +58,7 @@ const MonthView = (props) => {
                 year: year,
                 month: month,
                 dayOfMonth: date.getDate(),
-                dayOfWeek: WEEK_DAYS.find(i => i.day == date.getDay()), // 0-Sunday, 6-Monday
+                dayOfWeek: WEEK_DAYS.find(i => i.day === date.getDay()), // 0-Sunday, 6-Monday
                 event: {
                     em: subtractDay(date, emDate, tuaNum),
                     other1: subtractDay(date, other1Date, tuaNum),
@@ -84,6 +97,9 @@ const MonthView = (props) => {
                         dateData={hasDay ? curDay : null}
                         viewMode={viewMode}
                         scrSize={scrSize}
+                        selectDay={daySelect}
+                        setSelectDay={setDaySelect}
+                        setEvents={setEvents}
                     />
                 )
             });
@@ -139,6 +155,16 @@ const MonthView = (props) => {
             <div className="month__days">
                 {renderDayOfMonth()}
             </div>
+
+            {daySelect?.solar ?
+                <div className='event-list'>
+                    <div className='event-date'>{daySelect.solar.dayOfMonth}/{daySelect.solar.month}/{daySelect.solar.year}</div>
+                    <div className='event-date-lunar'>{daySelect.lunar.getDay()}/{daySelect.lunar.getMonth()}/{daySelect.lunar.getYear()} Âm lịch</div>
+                    {events ? events.map(e => <div className='event-item'>
+                        {e.name}
+                    </div>) : null}
+                </div>
+            : null}
         </div>
     )
 }

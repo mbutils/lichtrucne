@@ -129,6 +129,14 @@
         }
     }
 
+    .event-list {
+        margin: 16px;
+        font-size: 18px;
+        .event-date {
+            font-size: 26px;
+        }
+    }
+
     &.scr-sm,&.scr-xs {
         .month__title {
             font-size: 16px;
@@ -185,7 +193,8 @@
 
         .calendar-day {
             width: calc(100% / 7);
-            padding: 8px 16px;
+            position: relative;
+
             &:not(:last-child) {
                 border-right: 1px solid #fddeda;
             }
@@ -208,6 +217,9 @@
             }
 
             .calendar-day {
+                // padding: 8px 6px;
+            }
+            .day-view-border {
                 padding: 8px 6px;
             }
         }
@@ -219,8 +231,10 @@
     &.mode-month {
         &.today {
             background-color: #85b8f3;
-            border: 1px solid #3c92f5;
             color: #fff;
+            .day-view-border {
+                border-color: #3c92f5;
+            }
         }
         &.day-pass {
             opacity: 60%;
@@ -229,6 +243,16 @@
         &.main-event {
             background-color: #ffb3b3;
         }
+        &.selected {
+            .day-view-border {
+                border-color: #c20808;
+            }
+        }
+    }
+
+    .day-view-border {
+        border: 2px solid transparent;
+        padding: 8px 16px;
     }
 
     .day-view {
@@ -276,6 +300,18 @@
         }
     }
 
+    .event-icon {
+        font-size: 16px;
+        position: absolute;
+        left: 12px;
+        top: 12px;
+    }
+
+    .right-content {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+    }
     .day-view__content {
         height: 100%;
         width: 100%;
@@ -309,6 +345,11 @@
             .day-lunar {
                 font-size: 14px;
             }
+        }
+        .event-icon {
+            font-size: 10px;
+            left: 4px;
+            top: 4px;
         }
     }
     .scr-xs {
