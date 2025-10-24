@@ -250,5 +250,11 @@
         "is_lunar": 0,
         "type": "holiday",
         "name": "Ngày thành lập quân đội nhân dân Việt Nam"
+    },
+    {
+        "date": "19/11",
+        "is_lunar": 0,
+        "type": "holiday",
+        "name": "Ngày Quốc tế Nam giới"
     }
 ]
