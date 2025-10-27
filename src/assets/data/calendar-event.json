@@ -256,5 +256,11 @@
         "is_lunar": 0,
         "type": "holiday",
         "name": "Ngày Quốc tế Nam giới"
+    },
+    {
+        "date": "26/10",
+        "is_lunar": 0,
+        "type": "holiday",
+        "name": "Ngày Điều dưỡng Việt Nam"
     }
 ]
