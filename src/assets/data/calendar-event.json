@@ -262,5 +262,11 @@
         "is_lunar": 0,
         "type": "holiday",
         "name": "Ngày Điều dưỡng Việt Nam"
+    },
+    {
+        "date": "11/11",
+        "is_lunar": 0,
+        "type": "holiday",
+        "name": "Ngày Quốc tế độc thân"
     }
 ]
